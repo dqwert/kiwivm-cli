@@ -1,5 +1,5 @@
 [package]
-name = "kiwivm-cli"
+name = "kiwivm_cli"
 version = "0.1.0"
 authors = ["Wang Qin <wangqin0@outlook.com>"]
 edition = "2018"
