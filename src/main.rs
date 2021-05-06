@@ -1,17 +1,20 @@
 use std::env;
-
-use reqwest::blocking;
+use std::process;
+use std::collections::HashMap;
 
 use kiwivm_cli::{KiwivmCLI, Operation};
 
-
+#[allow(unused_must_use)]
 fn main() {
-    let mut vps = KiwivmCLI {
-        veid: env::var("KIWIVM_VEID").unwrap(),
-        api_key: env::var("KIWIVM_API_KEY").unwrap(),
-        info: None,
-    };
+    let args: Vec<String> = env::args().collect();
 
-    vps.call_api(Operation::Start);
-    vps.call_api(Operation::GetRateLimitStatus);
+    if args.len() == 1 || args[1].eq("-h") || args[1].eq("help") {
+        println!("{}", KiwivmCLI::hint());
+        process::exit(0);
+    }
+
+    let operation = Operation::new(args).unwrap();
+
+    let vps = KiwivmCLI::new();
+    vps.call_api(operation);
 }
